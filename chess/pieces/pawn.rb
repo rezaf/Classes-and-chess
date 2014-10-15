@@ -21,7 +21,7 @@ class Pawn < Piece
     
     move_dirs[1..2].each do |delta|
       x, y = delta[0] + @pos[0], delta[1] + @pos[1]
-      moves << [x, y] unless board[x, y].color == @color
+      moves << [x, y] unless (board[[x, y]].nil? || board[[x, y]].color == @color) 
     end
     
     moves.select { |move| valid_move?(move) }
