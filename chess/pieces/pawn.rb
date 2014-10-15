@@ -1,7 +1,13 @@
+# encoding: utf-8
+
 class Pawn < Piece
   
   def render
-    '  P  '
+    if color == :white
+      '  ♙  '
+    else
+      '  ♟  '
+    end
   end
   
   def move_dirs

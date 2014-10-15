@@ -1,6 +1,12 @@
+# encoding: utf-8
+
 class Queen < SlidingPiece
   def render
-    '  Q  '
+    if color == :white
+      '  ♕  '
+    else
+      '  ♛  '
+    end
   end
   
   def move_dirs

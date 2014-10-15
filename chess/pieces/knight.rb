@@ -1,6 +1,12 @@
+# encoding: utf-8
+
 class Knight < SteppingPiece
   def render
-    '  J  '
+    if color == :white
+      '  ♘  '
+    else
+      '  ♞  '
+    end
   end
   
   def move_dirs

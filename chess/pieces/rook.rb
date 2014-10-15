@@ -1,6 +1,12 @@
+# encoding: utf-8
+
 class Rook < SlidingPiece
   def render
-    '  R  '
+    if color == :white
+      '  ♖  '
+    else
+      '  ♜  '
+    end
   end
   
   def move_dirs

@@ -1,6 +1,12 @@
+# encoding: utf-8
+
 class Bishop < SlidingPiece
   def render
-    '  B  '
+    if color == :white
+      '  ♗  '
+    else
+      '  ♝  '
+    end
   end
   
   def move_dirs

@@ -97,16 +97,18 @@ class Board
     puts '   0    1    2    3    4    5    6    7  '
     @grid.each_with_index do |row, i|
       print "#{i}"
-      row.each do |square|
+      row.each_with_index do |square, j|
+        background = ((i + j).even? ? :light_blue : :white)
         if square.nil?
-          print "     "
+          print "     ".colorize(:background => background)
         else
-          print square.render
+          print square.render.colorize(:background => background)
         end
       end
       puts
     end 
   end
+    
 end
 
 

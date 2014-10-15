@@ -1,6 +1,7 @@
 require './human_player'
 require './board'
 require './pieces'
+require 'colorize'
 
 class Game
   def initialize
@@ -34,7 +35,6 @@ class Game
     
     puts "CHECKMATE!"
   end
-
 end
 
 

@@ -1,6 +1,12 @@
+# encoding: utf-8
+
 class King < SteppingPiece
   def render
-    '  K  '
+    if color == :white
+      '  ♔  '
+    else
+      '  ♚  '
+    end
   end
   
   def move_dirs
