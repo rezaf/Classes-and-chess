@@ -36,17 +36,18 @@ class Board
   end
   
   def move(start, end_pos)
-    if self[[start]].nil?
-      raise IllegalMoveError.new('No piece at that position') 
-    end    
-    unless self[[start]].moves.include?(end_pos)
-      raise IllegalMoveError.new('Invalid move') 
+    if self[start].nil?
+      raise IllegalMoveError.new('No piece at that position')
+    end
+    unless self[start].valid_moves.include?(end_pos)
+      raise IllegalMoveError.new('Invalid move')
     end
     move!(start, end_pos)
   end
 
   def move!(start, end_pos)
-    self[[start]], self[[end_pos]] = self[[end_pos]], nil
+    self[start].pos = end_pos
+    self[start], self[end_pos] = nil, self[start]
   end
   
   def in_check?(color)
@@ -57,7 +58,7 @@ class Board
   end
   
   def checkmate?(color)
-    in_check?(color) && find_pieces(color).all? { |piece| piece.moves.nil? }
+    in_check?(color) && find_pieces(color).all? { |piece| piece.moves.empty? }
   end
     
   def find_king(color)
@@ -93,7 +94,9 @@ class Board
   end
 
   def render
-    @grid.each do |row|
+    puts '   0    1    2    3    4    5    6    7  '
+    @grid.each_with_index do |row, i|
+      print "#{i}"
       row.each do |square|
         if square.nil?
           print "     "

@@ -14,16 +14,25 @@ class Pawn < Piece
   end
   
   def moves
-    moves = []
+    move_set = []
+
     x, y = move_dirs[0][0] + @pos[0], move_dirs[0][1] + @pos[1]
-     
-    moves << [x, y] if [x, y].nil?
+    
+    move_set << [x, y] if @board[[x, y]].nil?
     
     move_dirs[1..2].each do |delta|
       x, y = delta[0] + @pos[0], delta[1] + @pos[1]
-      moves << [x, y] unless (board[[x, y]].nil? || board[[x, y]].color == @color) 
+      move_set << [x, y] unless (board[[x, y]].nil? || board[[x, y]].color == @color) 
     end
-    
-    moves.select { |move| valid_move?(move) }
+    move_set
+
+    # move_set.select { |move| valid_move?(move) }
   end
+end
+
+begin
+  # code goes here
+rescue
+  # error handling
+  # retry
 end
