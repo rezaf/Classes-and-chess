@@ -2,32 +2,34 @@ require './human_player'
 require './board'
 require './pieces'
 require 'colorize'
+require 'io/console'
 
 class Game
   def initialize
     @board = Board.new
-    @player1 = HumanPlayer.new('Bill', :white)
-    @player2 = HumanPlayer.new('Ted', :black)
+    @player1 = HumanPlayer.new('Bill', :white, @board)
+    @player2 = HumanPlayer.new('Ted', :black, @board)
   end
   
   def play
+    @board.render(@player1.cursor_pos)
     until @board.checkmate?(:white) || @board.checkmate?(:black)
       begin
-        @board.render
-        puts "CHECK!" if @board.in_check?(@player1.color)
         move = @player1.get_move
         @board.move(move[0], move[1])
-      rescue IllegalMoveError => e
+        @board.render(@player2.cursor_pos)
+        puts "CHECK!" if @board.in_check?(@player2.color)
+      rescue RuntimeError => e
         puts e
         retry
       end
       begin
-        @board.render
-        puts "CHECK!" if @board.in_check?(@player2.color)
         move = @player2.get_move
         # @board.move(move[0], move[1])
         @board.move(move[0], move[1])
-      rescue IllegalMoveError => e
+        @board.render(@player1.cursor_pos)
+        puts "CHECK!" if @board.in_check?(@player1.color)
+      rescue RuntimeError => e
         puts e
         retry
       end

@@ -1,12 +1,15 @@
 class IllegalMoveError < RuntimeError
 end
-  
+
+class InputError < RuntimeError
+end
+
 class Board
-  attr_accessor :grid #, :color
+  
+  attr_accessor :grid
   
   def initialize(fill = true)
     @grid = Array.new (8) { Array.new (8) }
-    
     setup_board if fill
   end
   
@@ -93,12 +96,12 @@ class Board
     end
   end
 
-  def render
-    puts '   0    1    2    3    4    5    6    7  '
+  def render(cursor_pos)
+    system("clear")
     @grid.each_with_index do |row, i|
-      print "#{i}"
       row.each_with_index do |square, j|
-        background = ((i + j).even? ? :light_blue : :white)
+        background = :white if [i, j] == cursor_pos
+        background ||= ((i + j).even? ? :light_blue : :yellow)
         if square.nil?
           print "     ".colorize(:background => background)
         else
@@ -113,47 +116,3 @@ end
 
 
 
-
-# @grid[0][0]         = Rook.new(:white, self, # position)
-#     @grid[0][7]     = Rook.new(:white, self, # position)
-#     @grid[0][1]     = Knight.new(:white, self, # position)
-#     @grid[0][6]     = Knight.new(:white, self, # position)
-#     @grid[0][2]     = Bishop.new(:white, self, # position)
-#     @grid[0][5]     = Bishop.new(:white, self, # position)
-#     @grid[0][3]     = Queen.new(:white, self, # position)
-#     @grid[0][4]     = King.new(:white, self, # position)
-
-
-# @grid[7][0]         = Rook.new(:black)
-#     @grid[7][7]     = Rook.new(:black)
-#     @grid[7][1]     = Knight.new(:black)
-#     @grid[7][6]     = Knight.new(:black)
-#     @grid[7][2]     = Bishop.new(:black)
-#     @grid[7][5]     = Bishop.new(:black)
-#     @grid[7][3]     = Queen.new(:black)
-#     @grid[7][4]     = King.new(:black)
-
-
-
-# require 'io/console'
-# require 'colorize'
-#     @pointer_pos = [0, 0]
-# def render
-#   system("clear")
-#   @grid.each_with_index.map do |row, rdex|
-#     row.each_with_index.map do |column, cdex|
-#       render_tile(row, column, rdex, cdex)
-#     end.join("")
-#   end.join("\n")
-# end
-#
-# def render_tile(row, column, rdex, cdex)
-#   background ||= ([row, column] == @pointer_pos ? :light_blue : nil)
-#   if (rdex + cdex).even?
-#     background ||= :black
-#     '     '.colorize(:color => :white, :background => background)
-#   else
-#     background ||= :white
-#     '  T  '.colorize(:color => :black, :background => background)
-#   end
-#
